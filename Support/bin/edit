@@ -1,0 +1,12 @@
+#!/bin/sh
+
+##
+# edit: backend script of the MailMate Atom bundle, used to invoke the Atom editor (atom.io)
+# 
+# Based on the MacVim bundle originally by O'Shaughnessy Evans <shaug+mailmate@wumpus.org>; adopted for Atom by Alan Schussman <alan+mailmate@schussman.com>
+##
+
+PATH=$HOME/bin:~/Applications/MacVim.app/Contents/MacOS:/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:$PATH
+
+atom "$MM_EDIT_FILEPATH"
+osascript -e 'tell app "MailMate" to activate'

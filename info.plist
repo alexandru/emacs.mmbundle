@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactName</key>
+	<string>Alan Schussman</string>
+	<key>description</key>
+	<string>Atom editor integration.</string>
+	<key>name</key>
+	<string>Atom</string>
+	<key>uuid</key>
+	<string>7A68A673-7949-45E5-BD95-FB81CB4A2A74</string>
+</dict>
+</plist>
