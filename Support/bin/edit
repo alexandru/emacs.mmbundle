@@ -3,10 +3,15 @@
 ##
 # edit: backend script of the MailMate Atom bundle, used to invoke the Atom editor (atom.io)
 # 
-# Based on the MacVim bundle originally by O'Shaughnessy Evans <shaug+mailmate@wumpus.org>; adopted for Atom by Alan Schussman <alan+mailmate@schussman.com>
+# Based on the MacVim and TextMate bundles 
 ##
 
-PATH=$HOME/bin:~/Applications/MacVim.app/Contents/MacOS:/Applications/MacVim.app/Contents/MacOS:/usr/local/bin:$PATH
+PATH=$PATH:/usr/local/bin/:$HOME/bin
 
-atom "$MM_EDIT_FILEPATH"
+if which -s atom; then
+	atom --wait "$MM_EDIT_FILEPATH"
+else
+osascript -e 'tell app "MailMate" to display dialog "Please install the atom command line tool via the Install Shell Commands function avilable in the Atom application menu." buttons "OK" default button 1 with title "Unable to locate Atom"' >/dev/null 2>&1 &
+fi
 osascript -e 'tell app "MailMate" to activate'
+
