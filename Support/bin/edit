@@ -11,7 +11,7 @@ PATH=$PATH:/usr/local/bin/:$HOME/bin
 if which -s atom; then
 	atom --wait "$MM_EDIT_FILEPATH"
 else
-osascript -e 'tell app "MailMate" to display dialog "Please install the atom command line tool via the Install Shell Commands function avilable in the Atom application menu." buttons "OK" default button 1 with title "Unable to locate Atom"' >/dev/null 2>&1 &
+	osascript -e 'tell app "MailMate" to display dialog "Please install the atom command line tool via the Install Shell Commands function avilable in the Atom application menu." buttons "OK" default button 1 with title "Unable to locate Atom"' >/dev/null 2>&1 &
 fi
 osascript -e 'tell app "MailMate" to activate'
 
