@@ -14,12 +14,12 @@ else
     socket_file=$(lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8)
 
     if [[ $socket_file == "" ]]; then        
-        alias client="$path -c --alternate-editor=\"\""
+        client="$path -c --alternate-editor=\"\""
     else
-        alias client="$path -s \"$socket_file\""
+        client="$path -s \"$socket_file\""
     fi
 
-    client +$MM_LINE_NUMBER "$MM_EDIT_FILEPATH"
+    eval $client +$MM_LINE_NUMBER "$MM_EDIT_FILEPATH"
 fi
 
 osascript -e 'tell app "MailMate" to activate'
