@@ -16,7 +16,7 @@ else
     if [[ $socket_file == "" ]]; then        
         client="$path -c --alternate-editor=\"\""
     else
-        client="$path -s \"$socket_file\""
+        client="$path -c -s \"$socket_file\""
     fi
 
     eval $client +$MM_LINE_NUMBER "$MM_EDIT_FILEPATH"
