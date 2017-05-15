@@ -14,7 +14,7 @@ else
     socket_file=$(lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8)
 
     if [[ $socket_file == "" ]]; then        
-        client="$path -c --alternate-editor=\"\""
+        client="$path --alternate-editor=\"\""
     else
         client="$path -c -s \"$socket_file\""
     fi
