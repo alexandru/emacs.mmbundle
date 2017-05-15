@@ -1,17 +1,26 @@
 #!/bin/sh
 
 ##
-# edit: backend script of the MailMate Atom bundle, used to invoke the Atom editor (atom.io)
-# 
-# Based on the MacVim and TextMate bundles 
+# Based on the Atom, MacVim and TextMate bundles 
 ##
 
-PATH=$PATH:/usr/local/bin/:$HOME/bin
+path="${EMACSCLIENT:-/Applications/Emacs.app/Contents/MacOS/bin/emacsclient}"
 
-if which -s atom; then
-	atom --wait "$MM_EDIT_FILEPATH"
+if [ ! -f "$(which lsof)" ]; then
+    osascript -e 'tell application "System Events" to display dialog "Make sure you have `lsof` installed on your system." buttons "OK" default button 1 with title "Unable to locate system utility"' >/dev/null 2>&1 &
+elif [ ! -f "$path" ]; then
+    osascript -e 'tell application "System Events" to display dialog "Make sure you have Emacs for Mac installed on your system, go to emacsformacosx.com" buttons "OK" default button 1 with title "Unable to locate Emacs"' >/dev/null 2>&1 &
 else
-	osascript -e 'tell app "MailMate" to display dialog "Please install the atom command line tool via the Install Shell Commands function avilable in the Atom application menu." buttons "OK" default button 1 with title "Unable to locate Atom"' >/dev/null 2>&1 &
+    socket_file=$(lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8)
+
+    if [[ $socket_file == "" ]]; then        
+        alias client="$path -c --alternate-editor=\"\""
+    else
+        alias client="$path -s \"$socket_file\""
+    fi
+
+    client +$MM_LINE_NUMBER "$MM_EDIT_FILEPATH"
 fi
+
 osascript -e 'tell app "MailMate" to activate'
 
