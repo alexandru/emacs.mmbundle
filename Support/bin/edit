@@ -16,13 +16,20 @@ elif [ ! -f "$cpath" ]; then
 else
     socket_file=$(lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8)
 
-    if [[ $socket_file == "" ]]; then        
-        client="$cpath -c --alternate-editor=\"$epath\""
-    else
-        client="$cpath -c -s \"$socket_file\""
+    if [[ $socket_file == "" ]]; then
+        osascript -e "display notification \"This might take a couple of seconds, be patient...\" with title \"MailMate Editor\" subtitle \"Starting Emacs as a --daemon\""
+        # Tricking Emacs into thinking a tty is available
+        export TERM=xterm-color
+        script -q /tmp/pula "$epath" --daemon 1>/dev/null 2>/tmp/errors        
+        socket_file=$(lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8)
     fi
 
-    echo "$client +$MM_LINE_NUMBER \"$MM_EDIT_FILEPATH\""
-    eval $client +$MM_LINE_NUMBER "$MM_EDIT_FILEPATH"
+    if [[ $socket_file == "" ]]; then
+        osascript -e 'tell application "System Events" to display dialog "Start Emacs as a server (start-server) or as a --daemon" buttons "OK" default button 1 with title "Unable to locate Emacs server"' >/dev/null 2>&1
+    else
+        client="$cpath -c -s \"$socket_file\""
+        eval $client +$MM_LINE_NUMBER "$MM_EDIT_FILEPATH"
+    fi
+
     osascript -e 'tell app "MailMate" to activate'
 fi
