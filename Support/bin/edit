@@ -20,7 +20,7 @@ else
         osascript -e "display notification \"This might take a couple of seconds, be patient...\" with title \"MailMate Editor\" subtitle \"Starting Emacs as a --daemon\""
         # Tricking Emacs into thinking a tty is available
         export TERM=xterm-color
-        script -q /tmp/pula "$epath" --daemon 1>/dev/null 2>/tmp/errors        
+        script -q /dev/null "$epath" --daemon 1>/dev/null 2>&1
         socket_file=$(lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8)
     fi
 
