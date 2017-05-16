@@ -4,8 +4,10 @@
 # Based on the Atom, MacVim and TextMate bundles 
 ##
 
-cpath="${EMACSCLIENT:-/Applications/Emacs.app/Contents/MacOS/bin/emacsclient}"
-epath="${EMACSBIN:-/Applications/Emacs.app/Contents/MacOS/Emacs}"
+PATH=$HOME/bin:~/Applications/Emacs.app/Contents/MacOS/bin:/Applications/Emacs.app/Contents/MacOS/bin:~/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS:/usr/local/bin:$PATH
+
+cpath=$(which emacsclient)
+epath=$(which emacs)
 
 if [ ! -f "$(which lsof)" ]; then
     osascript -e 'tell application "System Events" to display dialog "Make sure you have `lsof` installed on your system." buttons "OK" default button 1 with title "Unable to locate system utility"' >/dev/null 2>&1 &
@@ -15,11 +17,12 @@ else
     socket_file=$(lsof -c Emacs | grep server | tr -s " " | cut -d' ' -f8)
 
     if [[ $socket_file == "" ]]; then        
-        client="$cpath -c --alternative-client='$epath'"
+        client="$cpath -c --alternate-editor=\"$epath\""
     else
         client="$cpath -c -s \"$socket_file\""
     fi
 
+    echo "$client +$MM_LINE_NUMBER \"$MM_EDIT_FILEPATH\""
     eval $client +$MM_LINE_NUMBER "$MM_EDIT_FILEPATH"
     osascript -e 'tell app "MailMate" to activate'
 fi

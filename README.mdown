@@ -1,4 +1,13 @@
-# Installation
+# Emacs integration with MailMate
+
+MailMate bundle allowing the usage of Emacs as a text editor for emails.
+
+While composing an email the action is available as:
+
+- Menu Item: Command → Emacs → Edit
+- Keyboard shortcut: Ctrl+Shift+O
+
+## Installation
 
 This bundle isn't part of the offician distribution, so you can
 install it manually like this:
