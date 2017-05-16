@@ -1,6 +1,7 @@
 # Emacs integration with MailMate
 
-MailMate bundle allowing the usage of Emacs as a text editor for emails.
+MailMate bundle allowing the usage of Emacs as a text editor for
+composing emails.
 
 While composing an email the action is available as:
 
